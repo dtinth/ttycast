@@ -22,6 +22,26 @@ Install ttycast:
 Running
 -------
 
+### New Method (almost realtime)
+
+In your terminal emulator, create a named pipe and pipe it using `ttyplay -n` to ttycast.
+
+    mkfifo /tmp/ttycast
+    ttyplay -n /tmp/ttycast | ttycast
+
+Open your browser and navigate to the server.
+
+    http://localhost:13377/
+
+Then, spawn a new terminal window and start recording:
+
+    reset && ttyrec /tmp/ttycast
+
+Then you should see characters appearing in real-time.
+
+
+### Old Method (normal but have low framerate)
+
 In your favorite terminal emulator, spawn a new window, and then to start recording:
 
     reset && ttyrec /tmp/ttyr
@@ -50,10 +70,18 @@ local terminal there through SSH!
 
 Good when you are behind a firewall.
 
-    ttyplay -p /tmp/ttyr | ssh myserver.dt.in.th PORT=12345 ttycast
+    ttyplay -n /tmp/ttycast | ssh myserver.dt.in.th PORT=12345 ttycast
+
+
+
+Even More Realtime
+------------------
+
+
 
 
 License
 -------
 
 The MIT license
+
