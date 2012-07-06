@@ -22,8 +22,6 @@ Install ttycast:
 Running
 -------
 
-### Using FIFO (better frame rate and less disk usage)
-
 In your terminal emulator, create a named pipe and pipe it using `ttyplay -n` to ttycast.
 
     mkfifo /tmp/ttycast
@@ -39,20 +37,7 @@ Then, spawn a new terminal window and start recording:
 
 Then you should see characters appearing in real-time.
 
-
-### Not Working? Then try the normal method:
-
-In your favorite terminal emulator, spawn a new window, and then to start recording:
-
-    reset && ttyrec /tmp/ttyr
-
-Now on your old window, run `ttyplay -p` and pipe it to ttycast!
-
-    ttyplay -p /tmp/ttyr | ttycast
-
-And go to
-
-    http://localhost:13377/
+(not working? Then try using normal files. Scroll all the way down.)
 
 
 Changing Port
@@ -84,4 +69,22 @@ License
 -------
 
 The MIT license
+
+
+----
+
+Normal File Usage
+-----------------
+
+In your favorite terminal emulator, spawn a new window, and then to start recording:
+
+    reset && ttyrec /tmp/ttyr
+
+Now on your old window, run `ttyplay -p` and pipe it to ttycast!
+
+    ttyplay -p /tmp/ttyr | ttycast
+
+And go to
+
+    http://localhost:13377/
 
