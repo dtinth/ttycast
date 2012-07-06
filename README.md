@@ -22,7 +22,7 @@ Install ttycast:
 Running
 -------
 
-### New Method (almost realtime)
+### Using FIFO (better frame rate and less disk usage)
 
 In your terminal emulator, create a named pipe and pipe it using `ttyplay -n` to ttycast.
 
@@ -40,7 +40,7 @@ Then, spawn a new terminal window and start recording:
 Then you should see characters appearing in real-time.
 
 
-### Old Method (normal but have low framerate)
+### Not Working? Then try the normal method:
 
 In your favorite terminal emulator, spawn a new window, and then to start recording:
 
