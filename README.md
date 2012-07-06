@@ -53,4 +53,7 @@ Good when you are behind a firewall.
     ttyplay -p /tmp/ttyr | ssh myserver.dt.in.th PORT=12345 ttycast
 
 
+License
+-------
 
+The MIT license
