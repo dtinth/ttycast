@@ -33,3 +33,24 @@ Now on your old window, run `ttyplay -p` and pipe it to ttycast!
 And go to
 
     http://localhost:13377/
+
+
+Changing Port
+-------------
+
+ttycast uses the PORT environment variable but the default port is 13377
+
+
+
+Piping Via SSH
+--------------
+
+You can install ttycast on your server somewhere, and pipe your
+local terminal there through SSH!
+
+Good when you are behind a firewall.
+
+    ttyplay -p /tmp/ttyr | ssh myserver.dt.in.th PORT=12345 ttycast
+
+
+
