@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>ttycast</title>
+<style>
+body {
+  background: #000;
+}
+.terminal {
+  border: #000 solid 5px;
+  font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
+  font-size: 18px;
+  color: #f0f0f0;
+  background: #000;
+}
+.reverse-video {
+  color: #000;
+  background: #f0f0f0;
+}
+</style>
+<body>
+
+<script src="/term"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+window.onload = function() {
+  var socket = io.connect();
+  var myterm = new Terminal(80, 25)
+  myterm.open()
+  document.body.appendChild(myterm.element)
+  socket.on('data', function(data) {
+    myterm.write(data)
+  })
+}
+
+</script>
+
+</body>
+

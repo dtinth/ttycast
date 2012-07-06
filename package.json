@@ -1,0 +1,19 @@
+{
+  "name": "ttycast",
+  "version": "0.0.0",
+  "description": "broadcast your tty to the world!",
+  "main": "app.js",
+  "dependencies": {
+    "connect": "~2.3.6",
+    "socket.io": "~0.9.6",
+    "tty.js": "~0.2.7"
+  },
+  "bin": {
+    "ttycast": "./app.js"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT"
+}
