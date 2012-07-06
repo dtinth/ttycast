@@ -5,6 +5,7 @@ This app allows you to broadcast your tty online!
 
 This NodeJS app is powered by tty.js, ttyrec (and ttyplay), socket.io and connect.
 
+<img src="http://i.imgur.com/7aRYM.png" alt="ttycast">
 
 Prerequisites
 -------------
