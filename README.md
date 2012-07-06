@@ -35,7 +35,7 @@ Then, spawn a new terminal window and start recording:
 
     reset && ttyrec /tmp/ttycast
 
-Then you should see characters appearing in real-time.
+Then you should see characters appearing in real-time. After using, don't forget to `rm /tmp/ttycast`!
 
 (not working? Then try using normal files. Scroll all the way down.)
 
