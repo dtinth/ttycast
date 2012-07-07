@@ -3,6 +3,14 @@ ttycast: broadcast your tty!
 
 This app allows you to broadcast your tty online!
 
+This Node.js app is very simple (less than 80 lines of my own code),
+by putting a lot of libraries together. So, this app wouldn't be possible without:
+
+* [tty.js](https://github.com/chjj/tty.js) - terminal emulator in pure javascript
+* [socket.io](http://socket.io/) - for real time communication
+* [ttyrec](http://0xcc.net/ttyrec/index.html.en) - a tty recorder
+* and also thanks to [Connect](http://www.senchalabs.org/connect/).
+
 This NodeJS app is powered by tty.js, ttyrec (and ttyplay), socket.io and connect.
 
 <img src="http://i.imgur.com/7aRYM.png" alt="ttycast">
@@ -18,6 +26,7 @@ Install ttycast:
 
     npm install -g ttycast
 
+Also, your terminal must be 80x25. But you can change that size in `index.html`.
 
 Running
 -------
@@ -31,7 +40,7 @@ Open your browser and navigate to the server.
 
     http://localhost:13377/
 
-Then, spawn a new terminal window and start recording:
+Then, spawn a new 80x25 terminal window and start recording:
 
     reset && ttyrec /tmp/ttycast
 
