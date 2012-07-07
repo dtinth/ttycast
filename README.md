@@ -13,7 +13,14 @@ by putting a lot of libraries together. So, this app wouldn't be possible withou
 
 This NodeJS app is powered by tty.js, ttyrec (and ttyplay), socket.io and connect.
 
+An online version of this app is available at <http://tty.hacked.jp>.
+You just use `telnet` instead, and you don't have to install Node.js.
+It's running on my EC2 free tier, so don't abuse it please.
+The modified source code will be released sometime after.
+
 <img src="http://i.imgur.com/7aRYM.png" alt="ttycast">
+
+
 
 Prerequisites
 -------------
