@@ -81,9 +81,6 @@ Um you can pipe anything that a terminal can understand to ttycast, and it will 
 
 
 
-Even More Realtime
-------------------
-
 
 
 
