@@ -49,6 +49,7 @@ Then you should see characters appearing in real-time. After using, don't forget
 (not working? Then try using normal files. Scroll all the way down.)
 
 
+
 Changing Port
 -------------
 
@@ -66,6 +67,15 @@ Good when you are behind a firewall.
 
     ttyplay -n /tmp/ttycast | ssh myserver.dt.in.th PORT=12345 ttycast
 
+
+
+Pipe Anything
+-------------
+
+Um you can pipe anything that a terminal can understand to ttycast, and it will be broadcasted.
+
+    brew install sl
+    { while true; do sl 2>&1; done } | ttycast
 
 
 Even More Realtime
