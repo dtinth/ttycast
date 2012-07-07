@@ -77,6 +77,9 @@ Um you can pipe anything that a terminal can understand to ttycast, and it will 
     brew install sl
     { while true; do sl 2>&1; done } | ttycast
 
+<img src="http://i.imgur.com/7pQoN.png" alt="sl!!">
+
+
 
 Even More Realtime
 ------------------
