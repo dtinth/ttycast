@@ -1,7 +1,7 @@
 ttycast: broadcast your tty!
 ============================
 
-This app allows you to broadcast your tty online!
+This app allows you to broadcast your tty online, in really real time!
 
 This Node.js app is very simple (less than 80 lines of my own code),
 by putting a lot of libraries together. So, this app wouldn't be possible without:
