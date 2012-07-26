@@ -4,6 +4,7 @@ var connect = require('connect')
   , app = connect.createServer()
   , server = require('http').createServer(app)
   , path = require('path')
+  , send = require('send')
   , termPath = require.resolve('tty.js/static/term')
 
 var io = require('socket.io').listen(server)
@@ -11,11 +12,8 @@ io.set('log level', 2)
 var past = ''
 app.use(connect.static(__dirname + '/static'))
 app.use('/term', function(req, res, next) {
-  connect.static.send(req, res, next, {
-    root: path.dirname(termPath)
-  , getOnly: true
-  , path: '/' + path.basename(termPath)
-  })
+  send(req, '/' + path.basename(termPath)).root(path.dirname(termPath))
+    .pipe(res)
 })
 
 //var play = spawn('ttyplay', [ '-p', process.argv[2] ])

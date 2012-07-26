@@ -1,12 +1,13 @@
 {
   "name": "ttycast",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "broadcast your tty to the world!",
   "main": "app.js",
   "dependencies": {
-    "connect": "2.3.6",
+    "connect": "2.4.x",
     "socket.io": "~0.9.6",
-    "tty.js": "0.2.7"
+    "tty.js": "0.2.7",
+    "send": "*"
   },
   "bin": {
     "ttycast": "./app.js"
