@@ -1,6 +1,6 @@
 {
   "name": "ttycast",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "broadcast your tty to the world!",
   "main": "app.js",
   "dependencies": {
