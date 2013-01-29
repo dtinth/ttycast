@@ -4,9 +4,9 @@
   "description": "broadcast your tty to the world!",
   "main": "app.js",
   "dependencies": {
-    "connect": "2.4.x",
-    "socket.io": "~0.9.6",
-    "tty.js": "0.2.7",
+    "connect": "~2.7.2",
+    "socket.io": "~0.9.13",
+    "tty.js": "0.2.8",
     "send": "*"
   },
   "bin": {
