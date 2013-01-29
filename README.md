@@ -24,9 +24,13 @@ The modified source code will be released sometime after.
 Prerequisites
 -------------
 
-Install ttyrec:
+Install ttyrec. On Mac OS X, with Homebrew, you would do:
 
     brew install ttyrec
+
+On Ubuntu, you can do:
+
+    sudo apt-get install ttyrec
 
 Install ttycast:
 
