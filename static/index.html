@@ -11,34 +11,163 @@ body {
   font-size: 18px;
   color: #f0f0f0;
   background: #000;
+  white-space: pre;
 }
-.reverse-video {
+.terminal .reverse-video {
   color: #000;
   background: #f0f0f0;
 }
+.terminal .bold {
+  font-weight: bold;
+}
+.terminal .underline {
+  text-decoration: underline;
+}
+.terminal .cursor {
+  box-shadow: inset 0 0 1px 1px #ccccca
+}
 </style>
+<script>
+;(function() {
+
+  var css = ''
+
+  // from tty.js
+  var colors = [
+    '#2e3436', '#cc0000', '#4e9a06', '#c4a000', '#3465a4', '#75507b', '#06989a', '#d3d7cf',
+    '#555753', '#ef2929', '#8ae234', '#fce94f', '#729fcf', '#ad7fa8', '#34e2e2', '#eeeeec'
+  ]
+
+  // Much thanks to TooTallNate for writing this.
+  var r = [0x00, 0x5f, 0x87, 0xaf, 0xd7, 0xff]
+    , i;
+
+  // 16-231
+  i = 0;
+  for (; i < 216; i++) {
+    out(r[(i / 36) % 6 | 0], r[(i / 6) % 6 | 0], r[i % 6]);
+  }
+
+  // 232-255 (grey)
+  i = 0;
+  for (; i < 24; i++) {
+    r = 8 + i * 10;
+    out(r, r, r);
+  }
+
+  function out(r, g, b) {
+    colors.push('#' + hex(r) + hex(g) + hex(b));
+  }
+
+  function hex(c) {
+    c = c.toString(16);
+    return c.length < 2 ? '0' + c : c;
+  }
+
+  for (i = 0; i < colors.length; i ++) {
+    css += '.terminal .bg-' + i + ' { background-color: ' + colors[i] + '; }\n'
+    css += '.terminal .fg-' + i + ' { color: ' + colors[i] + '; }\n'
+  }
+
+  document.write('<style>' + css + '<\/style>')
+
+})()
+
+</script>
 <body>
 
-<script src="/term"></script>
+<div class="terminal" id="terminal"></div>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/screen-buffer.js"></script>
 <script>
-
 window.onload = function() {
-  var socket = io.connect();
-  var myterm = new Terminal(80, 25)
-  myterm.open()
-  document.body.appendChild(myterm.element)
-  socket.on('data', function(data) {
-    myterm.write(data)
+
+  var buf = new ScreenBuffer()
+  var draw = buf.draw
+    , setCursor = buf.setCursor
+  var dirty = {}
+  var timeout = null
+  var el = document.getElementById('terminal')
+  var rows = []
+
+  function setDirty(row) {
+    dirty[row] = true
+    if (timeout == null) timeout = setTimeout(refresh, 1)
+  }
+
+  buf.draw = function(row) {
+    setDirty(row)
+    return draw.apply(this, arguments)
+  }
+  buf.setCursor = function(x, y) {
+    setDirty(this.y)
+    setDirty(y)
+    return setCursor.apply(this, arguments)
+  }
+
+  function refresh() {
+    timeout = null
+    while (rows.length < buf.getRows()) {
+      var i = rows.length
+      var rowElement = document.createElement('div')
+      rowElement.className = 'row'
+      el.appendChild(rowElement)
+      rows[i] = rowElement
+      dirty[i] = true
+    }
+    for (var i = 0; i < buf.getRows(); i ++) {
+      if (dirty[i]) {
+        rows[i].innerHTML = render(i)
+      }
+    }
+  }
+  
+  function render(row) {
+    var html = ''
+    var cols = buf.getCols(row)
+    var lastClass = null
+    for (var i = 0; i < cols; i ++) {
+      var cell = buf.getCell(row, i)
+        , attr = cell[0]
+        , ch = cell[1]
+        , classes = []
+      if (row == buf.cursorY && i == buf.cursorX) {
+        classes.push('cursor')
+      }
+      if (attr == -1) {
+        classes.push('reverse-video')
+      } else {
+        var bg = attr & 0x1ff
+          , fg = (attr >> 9) & 0x1ff
+          , flags = attr >> 18
+        if (flags & 1) classes.push('bold')
+        if (flags & 2) classes.push('underline')
+        classes.push('bg-' + bg)
+        classes.push('fg-' + fg)
+      }
+      var className = classes.join(' ')
+      if (className != lastClass) {
+        if (lastClass != null) html += '<\/span>'
+        html += '<span class="' + className + '">'
+        lastClass = className
+      }
+      if (ch == '&') html += '&amp;'
+      else if (ch == '<') html += '&lt;'
+      else if (ch == '>') html += '&gt;'
+      else html += ch
+    }
+    if (lastClass != null) html += '<\/span>'
+    return html
+  }
+
+  var socket = io.connect()
+  socket.on('data', function(operations) {
+    for (var i = 0; i < operations.length; i ++) {
+      var operation = operations[i]
+      buf[operation[0]].apply(buf, operation.slice(1))
+    }
   })
 }
-
-Terminal.bindKeys = function() {
-}
-
-Terminal.prototype.bindMouse = function() {
-}
-
 </script>
 
 </body>
