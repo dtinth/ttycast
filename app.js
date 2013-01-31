@@ -21,9 +21,11 @@ app.use('/screen-buffer.js', function(req, res, next) {
 
 process.stdin.resume()
 
+term.open()
+
 process.stdin.on('data', function(buf) {
   var str = buf.toString('utf8')
-  try { term.write(str) } catch (e) { }
+  try { term.write(str) } catch (e) { console.log(e); console.log(e.stack) }
 })
 
 term.on('screen', function(operations) {
