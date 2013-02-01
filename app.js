@@ -4,13 +4,18 @@
 var program = require('commander')
 
 program
-  .option('-r, --rows', 'Number of rows in the broadcasting terminal')
-  .option('-c, --cols', 'Number of columns in the broadcasting terminal')
+  .option('-r, --rows <n>', 'Number of rows in the broadcasting terminal', parseInt, 25)
+  .option('-c, --columns <n>', 'Number of columns in the broadcasting terminal', parseInt, 80)
+  .option('-C, --current', 'Use the current terminal\'s size')
   .parse(process.argv)
 
-var rows = program.rows || 80
-  , cols = program.cols || 25
+var rows = program.rows
+  , cols = program.columns
 
+if (program.current) {
+  rows = process.stdout.rows
+  cols = process.stdout.columns
+}
 
 // create the server and require other libraries
 var connect = require('connect')
@@ -24,7 +29,7 @@ var connect = require('connect')
 
 // create socket.io server
 var io = require('socket.io').listen(server)
-io.set('log level', 2)
+io.set('log level', 1)
 
 
 // serve static files
@@ -40,7 +45,8 @@ app.use('/screen-buffer.js', function(req, res, next) {
 
 // create a terminal emulator
 var HeadlessTerminal = require('./lib/headless-terminal')
-  , term = new HeadlessTerminal(80, 25)
+  , term = new HeadlessTerminal(cols, rows)
+console.log('creating a terminal: %dx%d', cols, rows)
 
 // pipe the data to this terminal
 term.open()
@@ -79,5 +85,8 @@ function broadcast() {
 
 
 // listen
-server.listen(Number(process.env.PORT) || 13377)
+server.listen(Number(process.env.PORT) || 13377, function() {
+  var address = server.address()
+  console.log('ttycast listening on %s port %s', address.host, address.port)
+})
 
