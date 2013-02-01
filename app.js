@@ -75,12 +75,15 @@ io.sockets.on('connection', function(sock) {
 // we patch our buffer to match with the terminal's buffer,
 // and broadcast the patch
 var timeout = null
+  , jsonSize = 0
 term.on('change', function() {
   if (timeout == null) timeout = setTimeout(broadcast, 1000 / 30)
 })
 function broadcast() {
   timeout = null
-  io.sockets.emit('data', patcher.patch(buffer, term.displayBuffer))
+  operations = patcher.patch(buffer, term.displayBuffer)
+  io.sockets.emit('data', operations)
+  // console.log('estimated b/w: ' + (jsonSize += JSON.stringify(operations).length) / 1024)
 }
 
 
