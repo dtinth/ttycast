@@ -4,11 +4,20 @@
 <style>
 body {
   background: #000;
+  text-align: center;
+  font-size: 16px;
+}
+.terminal-container {
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  text-align: left;
+  padding: 3px;
+  margin: 10px;
 }
 .terminal {
   border: #000 solid 5px;
   font-family: "DejaVu Sans Mono", "Menlo", "Monaco", "Liberation Mono", Consolas, "Courier New", monospace;
-  font-size: 18px;
+  font-size: 100%;
   color: #f0f0f0;
   background: #000;
   white-space: pre;
@@ -24,7 +33,7 @@ body {
   text-decoration: underline;
 }
 .terminal .cursor {
-  box-shadow: inset 0 0 1px 1px #ccccca
+  box-shadow: inset 0 0 2px 1px #ccccca
 }
 </style>
 <script>
@@ -36,6 +45,12 @@ body {
   var colors = [
     '#2e3436', '#cc0000', '#4e9a06', '#c4a000', '#3465a4', '#75507b', '#06989a', '#d3d7cf',
     '#555753', '#ef2929', '#8ae234', '#fce94f', '#729fcf', '#ad7fa8', '#34e2e2', '#eeeeec'
+  ]
+
+  // these colors i like more --dtinth
+  colors = [
+    "#000000", "#c83a14", "#6ed100", "#bbbb00", "#1d81e1", "#ad30ed", "#249aaf", "#bbbbbb",
+    "#555555", "#f77b5a", "#a0ee00", "#f6f500", "#59bbf3", "#f458d6", "#7cf2ff", "#ffffff"
   ]
 
   // Much thanks to TooTallNate for writing this.
@@ -76,7 +91,9 @@ body {
 </script>
 <body>
 
-<div class="terminal" id="terminal"></div>
+<div class="terminal-container">
+  <div class="terminal" id="terminal"></div>
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/screen-buffer.js"></script>
 <script>
