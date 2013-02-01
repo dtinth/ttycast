@@ -7,6 +7,7 @@
     "connect": "~2.7.2",
     "socket.io": "~0.9.13",
     "commander": "~1.1.1",
+    "headless-terminal": "0.0.3",
     "send": "*"
   },
   "bin": {

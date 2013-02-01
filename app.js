@@ -23,8 +23,8 @@ var connect = require('connect')
   , server = require('http').createServer(app)
   , path = require('path')
   , send = require('send')
-  , ScreenBuffer = require('./lib/screen-buffer')
-  , patcher = require('./lib/buffer-patcher')
+  , HeadlessTerminal = require('headless-terminal')
+  , ScreenBuffer = HeadlessTerminal.ScreenBuffer
 
 
 // create socket.io server
@@ -36,7 +36,7 @@ io.set('log level', 1)
 app.use(connect.static(__dirname + '/static'))
 
 // serve the screen buffer library
-var bufferPath = require.resolve('./lib/screen-buffer')
+var bufferPath = require.resolve('headless-terminal/screen-buffer')
 app.use('/screen-buffer.js', function(req, res, next) {
   send(req, '/' + path.basename(bufferPath)).root(path.dirname(bufferPath))
     .pipe(res)
@@ -44,8 +44,7 @@ app.use('/screen-buffer.js', function(req, res, next) {
 
 
 // create a terminal emulator
-var HeadlessTerminal = require('./lib/headless-terminal')
-  , term = new HeadlessTerminal(cols, rows)
+var term = new HeadlessTerminal(cols, rows)
 console.log('creating a terminal: %dx%d', cols, rows)
 
 // pipe the data to this terminal
@@ -63,6 +62,7 @@ process.stdin.on('end', function() {
 
 // the display as seen by clients
 var buffer = new ScreenBuffer()
+  , patcher = HeadlessTerminal.patcher
 
 // when a client is connected, it is initialized with an empty buffer.
 // we patch its buffer to our current state
