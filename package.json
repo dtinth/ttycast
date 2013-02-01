@@ -6,6 +6,7 @@
   "dependencies": {
     "connect": "~2.7.2",
     "socket.io": "~0.9.13",
+    "commander": "~1.1.1",
     "send": "*"
   },
   "bin": {
