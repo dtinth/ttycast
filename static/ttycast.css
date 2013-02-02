@@ -1,0 +1,36 @@
+
+/* not related to terminal */
+body {
+  background: #000;
+  text-align: center;
+  font-size: 16px;
+}
+.terminal-container {
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  text-align: left;
+  padding: 4px;
+  margin: 10px;
+}
+
+/* the terminal */
+.terminal {
+  font-family: "DejaVu Sans Mono", "Menlo", "Monaco", "Liberation Mono", Consolas, "Courier New", monospace;
+  font-size: 100%;
+  color: #f0f0f0;
+  background: #000;
+  white-space: pre;
+}
+.terminal .reverse-video {
+  color: #000;
+  background: #f0f0f0;
+}
+.terminal .bold {
+  font-weight: bold;
+}
+.terminal .underline {
+  text-decoration: underline;
+}
+.terminal .cursor {
+  box-shadow: inset 0 0 2px 1px #ccccca
+}

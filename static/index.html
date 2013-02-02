@@ -1,45 +1,17 @@
 <!DOCTYPE html>
 <meta charset=utf-8>
 <title>ttycast</title>
-<style>
-body {
-  background: #000;
-}
-.terminal {
-  border: #000 solid 5px;
-  font-family: "DejaVu Sans Mono", "Menlo", "Monaco", "Liberation Mono", Consolas, "Courier New", monospace;
-  font-size: 18px;
-  color: #f0f0f0;
-  background: #000;
-}
-.reverse-video {
-  color: #000;
-  background: #f0f0f0;
-}
-</style>
+<link rel=stylesheet href=ttycast.css>
+<script src="term-colors.js"></script>
 <body>
 
-<script src="/term"></script>
+<div class="terminal-container">
+  <div class="terminal" id="terminal"></div>
+</div>
 <script src="/socket.io/socket.io.js"></script>
-<script>
-
-window.onload = function() {
-  var socket = io.connect();
-  var myterm = new Terminal(80, 25)
-  myterm.open()
-  document.body.appendChild(myterm.element)
-  socket.on('data', function(data) {
-    myterm.write(data)
-  })
-}
-
-Terminal.bindKeys = function() {
-}
-
-Terminal.prototype.bindMouse = function() {
-}
-
-</script>
+<script src="/screen-buffer.js"></script>
+<script src="/display-buffer.js"></script>
+<script src="/ttycast.js"></script>
 
 </body>
 

@@ -1,40 +1,106 @@
 #!/usr/bin/env node
 
+// parse the command line
+var program = require('commander')
+
+program
+  .option('-r, --rows <n>', 'Number of rows in the broadcasting terminal', parseInt, 25)
+  .option('-c, --columns <n>', 'Number of columns in the broadcasting terminal', parseInt, 80)
+  .option('-s, --size <CxR>', 'Size of the terminal (shorthand for combination of -c and -r)')
+  .option('-C, --current', 'Use the current terminal\'s size')
+  .parse(process.argv)
+
+var rows = program.rows
+  , cols = program.columns
+
+if (program.size) {
+  var m = program.size.match(/^(\d+)x(\d+)$/i)
+  if (!m) {
+    console.log('Invalid size specified! Must be in form CxR')
+    program.help()
+  }
+  cols = parseInt(m[1], 10)
+  rows = parseInt(m[2], 10)
+}
+
+if (program.current) {
+  rows = process.stdout.rows
+  cols = process.stdout.columns
+}
+
+// create the server and require other libraries
 var connect = require('connect')
   , app = connect.createServer()
   , server = require('http').createServer(app)
   , path = require('path')
   , send = require('send')
-  , termPath = require.resolve('tty.js/static/term')
+  , HeadlessTerminal = require('headless-terminal')
+  , ScreenBuffer = HeadlessTerminal.ScreenBuffer
 
+
+// create socket.io server
 var io = require('socket.io').listen(server)
-io.set('log level', 2)
-var past = ''
+io.set('log level', 1)
+
+
+// serve static files
 app.use(connect.static(__dirname + '/static'))
-app.use('/term', function(req, res, next) {
-  send(req, '/' + path.basename(termPath)).root(path.dirname(termPath))
+
+// serve the screen buffer library
+var bufferPath = require.resolve('headless-terminal/screen-buffer')
+app.use('/screen-buffer.js', function(req, res, next) {
+  send(req, '/' + path.basename(bufferPath)).root(path.dirname(bufferPath))
     .pipe(res)
 })
 
-//var play = spawn('ttyplay', [ '-p', process.argv[2] ])
+
+// create a terminal emulator
+var term = new HeadlessTerminal(cols, rows)
+console.log('creating a terminal: %dx%d', cols, rows)
+
+// pipe the data to this terminal
+term.open()
 process.stdin.resume()
 process.stdin.on('data', function(buf) {
   var str = buf.toString('utf8')
-  past += str
-  var idx = past.lastIndexOf('\x1b\x5b\x48\x1b\x5b\x32\x4a')
-  if (~idx) {
-    past = past.substr(idx)
-  }
-  io.sockets.emit('data', str)
-  console.log('past size: ' + past.length)
+  try { term.write(str) } catch (e) { console.log(e); console.log(e.stack) }
 })
 process.stdin.on('end', function() {
   console.log('died')
   process.exit(1)
 })
+
+
+// the display as seen by clients
+var buffer = new ScreenBuffer()
+  , patcher = HeadlessTerminal.patcher
+
+// when a client is connected, it is initialized with an empty buffer.
+// we patch its buffer to our current state
 io.sockets.on('connection', function(sock) {
-  sock.emit('data', past)
+  var client = new ScreenBuffer()
+  io.sockets.emit('data', patcher.patch(client, buffer))
 })
 
-server.listen(Number(process.env.PORT) || 13377)
+// when the terminal's screen buffer is changed,
+// we patch our buffer to match with the terminal's buffer,
+// and broadcast the patch
+var timeout = null
+  , jsonSize = 0
+term.on('change', function() {
+  if (timeout == null) timeout = setTimeout(broadcast, 1000 / 30)
+})
+function broadcast() {
+  timeout = null
+  operations = patcher.patch(buffer, term.displayBuffer)
+  io.sockets.emit('data', operations)
+  // console.log('estimated b/w: ' + (jsonSize += JSON.stringify(operations).length) / 1024)
+}
+
+
+// listen
+server.listen(Number(process.env.PORT) || 13377, function() {
+  var address = server.address()
+  console.log('ttycast listening on %s port %s', address.address, address.port)
+})
 
