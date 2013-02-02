@@ -1,12 +1,13 @@
 {
   "name": "ttycast",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "broadcast your tty to the world!",
   "main": "app.js",
   "dependencies": {
     "connect": "~2.7.2",
     "socket.io": "~0.9.13",
-    "tty.js": "0.2.8",
+    "commander": "~1.1.1",
+    "headless-terminal": "0.0.3",
     "send": "*"
   },
   "bin": {
