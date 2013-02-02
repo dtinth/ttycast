@@ -59,6 +59,11 @@ Changing Port
 ttycast uses the PORT environment variable but the default port is 13377
 
 
+Changing Terminal Size
+----------------------
+
+Just change the `-s` switch from `80x25` to something else. Make sure it matches with the terminal you're using.
+
 
 Piping Via SSH
 --------------
