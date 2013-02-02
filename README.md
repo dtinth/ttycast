@@ -1,10 +1,7 @@
 ttycast: broadcast your tty!
 ============================
 
-This app allows you to broadcast your tty online, in really real time!
-
-This Node.js app is very simple (less than 80 lines of my own code),
-by putting a lot of libraries together. So, this app wouldn't be possible without:
+This app allows you to broadcast your tty online, in really real time! Powered by:
 
  * [headless-terminal](https://github.com/dtinth/headless-terminal) - headless
    terminal emulator, forked from [tty.js](https://github.com/chjj/tty.js).
