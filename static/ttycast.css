@@ -7,9 +7,9 @@ body {
 }
 .terminal-container {
   display: inline-block;
-  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
   text-align: left;
-  padding: 3px;
+  padding: 4px;
   margin: 10px;
 }
 
