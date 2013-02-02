@@ -6,11 +6,22 @@ var program = require('commander')
 program
   .option('-r, --rows <n>', 'Number of rows in the broadcasting terminal', parseInt, 25)
   .option('-c, --columns <n>', 'Number of columns in the broadcasting terminal', parseInt, 80)
+  .option('-s, --size <CxR>', 'Size of the terminal (shorthand for combination of -c and -r)')
   .option('-C, --current', 'Use the current terminal\'s size')
   .parse(process.argv)
 
 var rows = program.rows
   , cols = program.columns
+
+if (program.size) {
+  var m = program.size.match(/^(\d+)x(\d+)$/i)
+  if (!m) {
+    console.log('Invalid size specified! Must be in form CxR')
+    program.help()
+  }
+  cols = parseInt(m[1], 10)
+  rows = parseInt(m[2], 10)
+}
 
 if (program.current) {
   rows = process.stdout.rows
@@ -90,6 +101,6 @@ function broadcast() {
 // listen
 server.listen(Number(process.env.PORT) || 13377, function() {
   var address = server.address()
-  console.log('ttycast listening on %s port %s', address.host, address.port)
+  console.log('ttycast listening on %s port %s', address.address, address.port)
 })
 
