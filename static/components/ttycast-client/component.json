@@ -1,0 +1,21 @@
+{
+  "name": "ttycast-client",
+  "version": "0.1.1",
+  "main": [
+    "./display-buffer.js",
+    "./ttycast.css",
+    "./colors.js"
+  ],
+  "dependencies": {
+    "screen-buffer": "dtinth/screen-buffer#~0.1.2"
+  },
+  "gitHead": "c56534a27c5a368bd10d4aa11d1817ebb9712a8d",
+  "readme": "client side part of ttycast\n",
+  "readmeFilename": "README.md",
+  "_id": "ttycast-client@0.1.1",
+  "description": "client side part of ttycast",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dtinth/ttycast-client.git"
+  }
+}

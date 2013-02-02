@@ -46,13 +46,6 @@ io.set('log level', 1)
 // serve static files
 app.use(connect.static(__dirname + '/static'))
 
-// serve the screen buffer library
-var bufferPath = require.resolve('headless-terminal/screen-buffer')
-app.use('/screen-buffer.js', function(req, res, next) {
-  send(req, '/' + path.basename(bufferPath)).root(path.dirname(bufferPath))
-    .pipe(res)
-})
-
 
 // create a terminal emulator
 var term = new HeadlessTerminal(cols, rows)

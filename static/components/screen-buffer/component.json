@@ -1,0 +1,16 @@
+{
+  "name": "screen-buffer",
+  "version": "0.1.2",
+  "main": [
+    "./screen-buffer.js"
+  ],
+  "gitHead": "5e27c8eaf905f57875429751fd942bb3f2fa6a5d",
+  "readme": "\nscreen buffer component\n",
+  "readmeFilename": "README.md",
+  "_id": "screen-buffer@0.1.2",
+  "description": "screen buffer component",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dtinth/screen-buffer.git"
+  }
+}

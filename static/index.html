@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <meta charset=utf-8>
 <title>ttycast</title>
-<link rel=stylesheet href=ttycast.css>
-<script src="term-colors.js"></script>
+<link rel=stylesheet href=components/ttycast-client/ttycast.css>
+<style>
+body {
+  background: #000;
+  text-align: center;
+  font-size: 16px;
+}
+.terminal-container {
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  text-align: left;
+  padding: 4px;
+  margin: 10px;
+}
+</style>
+<script src=components/ttycast-client/colors.js></script>
 <body>
 
 <div class="terminal-container">
   <div class="terminal" id="terminal"></div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/screen-buffer.js"></script>
-<script src="/display-buffer.js"></script>
-<script src="/ttycast.js"></script>
-
+<script src="components/screen-buffer/screen-buffer.js"></script>
+<script src="components/ttycast-client/display-buffer.js"></script>
+<script src="ttycast.js"></script>
 </body>
 
