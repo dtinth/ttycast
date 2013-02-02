@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+set -x
+
+lines=$(tput lines)
+cols=$(tput cols)
+temp=$(mktemp -u -t ttyrec)
+rm -f /tmp/ttycast
+mkfifo -m 600 "$temp" /tmp/ttycast
+
+cat /tmp/ttycast | tee "$@" > "$temp" & ttyplay -n "$temp" | ttycast -s $cols"x"$lines
+rm -f /tmp/ttycast "$temp"

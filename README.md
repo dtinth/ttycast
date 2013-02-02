@@ -28,9 +28,34 @@ Install ttycast:
     npm install -g ttycast
 
 
-
-Running
+Running (Broadcast & Record)
 -------
+
+First, set your terminal to the size that you prefer to broadcast, then run the script:
+
+    ttyreccast outfile.tty
+
+Open your browser and navigate to the server. You should see a blank black screen.
+
+    http://localhost:13377/
+
+Then, open a new terminal of __the same size__ and run this command:
+
+    reset && ttyrec /tmp/ttycast
+
+You should see your terminal screen on the web browser now. Recorded output goes into `outfile.tty`.
+
+
+
+Changing Port
+-------------
+
+ttycast uses the PORT environment variable but the default port is 13377
+
+
+
+Running (manual way)
+--------------------
 
 In your terminal emulator, create a named pipe and pipe it using `ttyplay -n` to ttycast.
 
@@ -46,20 +71,6 @@ Then, spawn a new 80x25 terminal window and start recording:
 
 Then you should see characters appearing in real-time. After using, don't forget to `rm /tmp/ttycast`!
 
-(not working? Then try using normal files. Scroll all the way down.)
-
-
-
-Changing Port
--------------
-
-ttycast uses the PORT environment variable but the default port is 13377
-
-
-Changing Terminal Size
-----------------------
-
-Just change the `-s` switch from `80x25` to something else. Make sure it matches with the terminal you're using.
 
 
 Piping Via SSH

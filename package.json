@@ -11,7 +11,8 @@
     "send": "*"
   },
   "bin": {
-    "ttycast": "./app.js"
+    "ttycast": "./app.js",
+    "ttyreccast": "./ttyreccast"
   },
   "devDependencies": {},
   "scripts": {
