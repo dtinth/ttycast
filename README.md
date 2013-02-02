@@ -12,7 +12,7 @@ by putting a lot of libraries together. So, this app wouldn't be possible withou
  * [ttyrec](http://0xcc.net/ttyrec/index.html.en) - a tty recorder
  * and also thanks to [Connect](http://www.senchalabs.org/connect/).
 
-<img src="http://i.imgur.com/7aRYM.png" alt="ttycast">
+<img src="http://i.imgur.com/YBobVKm.png" alt="ttycast">
 
 
 Prerequisites
