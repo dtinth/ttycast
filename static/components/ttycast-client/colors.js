@@ -45,6 +45,9 @@
     css += '.terminal .bg-' + i + ' { background-color: ' + colors[i] + '; }\n'
     css += '.terminal .fg-' + i + ' { color: ' + colors[i] + '; }\n'
   }
+  for (i = 0; i < 8; i ++) {
+    css += '.terminal .bold.fg-' + i + ' { color: ' + colors[i + 8] + '; }\n'
+  }
 
   document.write('<style>' + css + '<\/style>')
 
