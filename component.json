@@ -2,7 +2,7 @@
   "name": "ttycast",
   "version": "0.0.0",
   "dependencies": {
-    "ttycast-client": "git://github.com/dtinth/ttycast-client.git#~0.1.2"
+    "ttycast-client": "git://github.com/dtinth/ttycast-client.git#~0.1.3"
   },
   "private": true
 }

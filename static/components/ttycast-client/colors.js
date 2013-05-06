@@ -41,10 +41,17 @@
     return c.length < 2 ? '0' + c : c;
   }
 
-  for (i = 0; i < colors.length; i ++) {
-    css += '.terminal .bg-' + i + ' { background-color: ' + colors[i] + '; }\n'
-    css += '.terminal .fg-' + i + ' { color: ' + colors[i] + '; }\n'
+  function color(i, bg, fg) {
+    css += '.terminal .bg-' + i + ' { background-color: ' + bg + '; }\n'
+    css += '.terminal .fg-' + i + ' { color: ' + fg + '; }\n'
   }
+
+  for (i = 0; i < colors.length; i ++) {
+    color(i, colors[i], colors[i])
+  }
+  color('default-bg', '#000000', '#000000')
+  color('default-fg', '#f0f0f0', '#f0f0f0')
+
   for (i = 0; i < 8; i ++) {
     css += '.terminal .bold.fg-' + i + ' { color: ' + colors[i + 8] + '; }\n'
   }

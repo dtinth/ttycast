@@ -72,13 +72,20 @@ function DisplayBuffer(el) {
         classes.push('cursor')
       }
       if (attr == -1) {
-        classes.push('reverse-video')
+        classes.push('inverse')
       } else {
         var bg = attr & 0x1ff
           , fg = (attr >> 9) & 0x1ff
           , flags = attr >> 18
         if (flags & 1) classes.push('bold')
         if (flags & 2) classes.push('underline')
+        if (bg > 255) bg = 'default-bg'
+        if (fg > 255) fg = 'default-fg'
+        if (flags & 4) {
+          var tmp = bg
+          bg = fg
+          fg = tmp
+        }
         classes.push('bg-' + bg)
         classes.push('fg-' + fg)
       }
