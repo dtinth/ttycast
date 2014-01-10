@@ -6,7 +6,7 @@ This app allows you to broadcast your tty online, in really real time! Powered b
  * [headless-terminal](https://github.com/dtinth/headless-terminal) - headless
    terminal emulator, forked from [tty.js](https://github.com/chjj/tty.js).
  * [socket.io](http://socket.io/) - for real time communication
- * [ttyrec](http://0xcc.net/ttyrec/index.html.en) - a tty recorder
+ * [ttyrec](http://0xcc.net/ttyrec/index.html.en) - a tty recorder (and the [JavaScript port](https://github.com/jedi4ever/ttyrec.js))
  * and also thanks to [Connect](http://www.senchalabs.org/connect/).
 
 <img src="http://i.imgur.com/YBobVKm.png" alt="ttycast">
@@ -15,17 +15,11 @@ This app allows you to broadcast your tty online, in really real time! Powered b
 Prerequisites
 -------------
 
-Install ttyrec. On Mac OS X, with Homebrew, you would do:
+Install ttyrec and ttycast:
 
-    brew install ttyrec
+    npm install -g ttyrec ttycast
 
-On Ubuntu, you can do:
-
-    sudo apt-get install ttyrec
-
-Install ttycast:
-
-    npm install -g ttycast
+* The above command installs the [JavaScript port of ttyrec](https://github.com/jedi4ever/ttyrec.js), which is fairly new. If it does not work, you can also try the [native ttyrec](http://0xcc.net/ttyrec/index.html.en), which is available in most package managers (apt-get, Homebrew, ...).
 
 
 Running (Broadcast & Record)
