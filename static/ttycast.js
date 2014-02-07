@@ -7,7 +7,6 @@ window.onload = function() {
 
   var socket = io.connect()
   socket.on('data', function(operations) {
-    console.log(uneval(operations))
     ScreenBuffer.patch(buf, operations)
   })
 
