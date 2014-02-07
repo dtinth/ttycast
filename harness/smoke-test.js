@@ -12,7 +12,7 @@ child.stdout.on('data', function(data) {
 })
 
 child.on('exit', function() {
-  phantom.exit(0)
+  phantom.exit(1)
 })
 
 setTimeout(startTest, 1000)
@@ -37,6 +37,7 @@ function check() {
     console.error('Something is wrong!')
     phantom.exit(1)
   } else {
+    console.log(text.trim())
     phantom.exit(0)
   }
 }
