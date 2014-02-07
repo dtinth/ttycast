@@ -1,12 +1,13 @@
 
+/*global ScreenBuffer*/
 function DisplayBuffer(el) {
 
   ScreenBuffer.call(this)
   var buf = this
 
   // overrides
-  var draw = buf.draw
-    , copy = buf.copy
+  var update = buf.update
+    , setCell = buf.setCell
     , setCursor = buf.setCursor
 
   // private vars
@@ -15,15 +16,15 @@ function DisplayBuffer(el) {
     , rows = []
 
   // override : when draw, mark the buffer dirty
-  buf.draw = function(row) {
+  buf.update = function(row) {
     setDirty(row)
-    return draw.apply(this, arguments)
+    return update.apply(this, arguments)
   }
 
   // override : when copy, mark the buffer dirty
-  buf.copy = function(row) {
+  buf.setCell = function(row) {
     setDirty(row)
-    return copy.apply(this, arguments)
+    return setCell.apply(this, arguments)
   }
 
   // override : when moving cursor, mark the buffer dirty
@@ -41,16 +42,17 @@ function DisplayBuffer(el) {
 
   // refresh the display
   function refresh() {
+    var i
     timeout = null
     while (rows.length < buf.getRows()) {
-      var i = rows.length
+      i = rows.length
       var rowElement = document.createElement('div')
       rowElement.className = 'row'
       el.appendChild(rowElement)
       rows[i] = rowElement
       dirty[i] = true
     }
-    for (var i = 0; i < buf.getRows(); i ++) {
+    for (i = 0; i < buf.getRows(); i ++) {
       if (dirty[i]) {
         rows[i].innerHTML = render(i)
       }

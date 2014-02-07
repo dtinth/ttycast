@@ -1,4 +1,5 @@
 
+/*global DisplayBuffer, ScreenBuffer, io*/
 window.onload = function() {
 
   var el = document.getElementById('terminal')
@@ -6,11 +7,8 @@ window.onload = function() {
 
   var socket = io.connect()
   socket.on('data', function(operations) {
-    for (var i = 0; i < operations.length; i ++) {
-      var operation = operations[i]
-      buf[operation[0]].apply(buf, operation.slice(1))
-      if (typeof console != 'undefined' && console && console.log) console.log(operation)
-    }
+    console.log(uneval(operations))
+    ScreenBuffer.patch(buf, operations)
   })
 
 }

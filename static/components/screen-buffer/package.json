@@ -1,15 +1,18 @@
 {
   "name": "screen-buffer",
-  "version": "0.1.2",
+  "version": "0.3.2",
   "description": "A simple screen buffer component",
-  "main": "screen-buffer.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/dtinth/screen-buffer.git"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "~1.17.1"
+  }
 }

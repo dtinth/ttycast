@@ -7,6 +7,10 @@
   background: #000;
   white-space: pre;
 }
+.terminal .row {
+  line-height: 1.2em;
+  height: 1.2em;
+}
 .terminal .reverse-video {
   color: #000;
   background: #f0f0f0;

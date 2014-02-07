@@ -1,0 +1,28 @@
+{
+  "name": "ttycast",
+  "version": "0.3.0",
+  "homepage": "https://github.com/dtinth/ttycast",
+  "authors": [
+    "Thai Pangsakulyanont <org.yi.dttvb@gmail.com>"
+  ],
+  "description": "Broadcast your tty to the world!",
+  "main": "app.js",
+  "keywords": [
+    "tty",
+    "vt",
+    "xterm",
+    "terminal"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ttycast-client": "dtinth/ttycast-client#~0.2.1"
+  }
+}

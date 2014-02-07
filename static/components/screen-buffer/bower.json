@@ -1,0 +1,24 @@
+{
+  "name": "screen-buffer",
+  "main": "./screen-buffer.js",
+  "version": "0.3.2",
+  "homepage": "https://github.com/dtinth/screen-buffer",
+  "authors": [
+    "Thai Pangsakulyanont <org.yi.dttvb@gmail.com>"
+  ],
+  "description": "screen-buffer for virtual terminals",
+  "keywords": [
+    "vt",
+    "tty",
+    "pty",
+    "terminal"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

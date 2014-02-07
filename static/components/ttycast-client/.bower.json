@@ -1,0 +1,36 @@
+{
+  "name": "ttycast-client",
+  "version": "0.2.1",
+  "homepage": "https://github.com/dtinth/ttycast-client",
+  "authors": [
+    "Thai Pangsakulyanont <org.yi.dttvb@gmail.com>"
+  ],
+  "description": "client-side code for ttycast",
+  "keywords": [
+    "ttycast",
+    "vt",
+    "tty",
+    "terminal"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "screen-buffer": "dtinth/screen-buffer#~0.3.2"
+  },
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.1",
+    "commit": "cf5eb55ccecb7bd0b2936a4303d53fca8d3abe05"
+  },
+  "_source": "git://github.com/dtinth/ttycast-client.git",
+  "_target": "~0.2.1",
+  "_originalSource": "dtinth/ttycast-client",
+  "_direct": true
+}

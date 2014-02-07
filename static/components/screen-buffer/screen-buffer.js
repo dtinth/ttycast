@@ -1,36 +1,64 @@
+/*jshint bitwise:false*/
 
-/**
- * A ScreenBuffer represents a visible portion of a terminal in a screen.
- * A ScreenBuffer contains a lot of cells. Each cell contains a character
- * and attributes, such as color and boldness. It also keeps track of cursor position.
- */
+// ScreenBuffer
+// ============
+// A ScreenBuffer represents a visible portion of a terminal in a screen.
+// A ScreenBuffer contains a lot of cells.
+// Each cell contains a character and attributes,
+// such as color and boldness.
+// It also keeps track of cursor position.
+//
+// ## Cell Attributes
+//
+// Currently the attributes is a 21-bit integer. From MSB:
+//
+//  * 1 bit - inverse video flag
+//  * 1 bit - underline flag
+//  * 1 bit - bold flag
+//  * 9 bits - foreground color (according to xterm-256)
+//  * 9 bits - background color (according to xterm-256)
+//
+// There are two special values for colors:
+//
+//  * 257 - default foreground color
+//  * 256 - default background color
+//  
+// ## API
+//
 function ScreenBuffer() {
   this.data = []
 }
 
-/**
- * Set one line of data in the ScreenBuffer.
- * y is the row in the screen and data array looks like this:
- *     [ [attribute, character], ... ]
- */
+ScreenBuffer.EMPTY_CELL = [(257 << 9) | 256, ' ']
+
+// ### update(y, [ [attr, char], [attr, char], ... ]) 
+//
+// Set one line of data in the ScreenBuffer.
+// y is the row in the screen and data array looks like this:
+//     [ [attribute, character], ... ]
+//
 ScreenBuffer.prototype.update = function(y, target) {
   var arr = this.data[y] || (this.data[y] = [])
+  arr.length = target.length
   for (var i = 0; i < target.length; i ++) {
     if (target[i]) {
       arr[i] = [target[i][0], target[i][1]]
     } else {
-      arr[i] = [0, ' ']
+      arr[i] = null
     }
   }
 }
 
-/** Returns things in the display buffer... */
+// ### toString()
+//
+// Returns the string in the display buffer.
+//
 ScreenBuffer.prototype.toString = function() {
   var lines = []
   for (var i = 0; i < this.data.length; i ++) {
     var arr = this.data[i], o = ''
-    for (var j = 0; j < arr.length; j ++) {
-      if (arr[j]) o += arr[j][1]
+    if (arr) for (var j = 0; j < arr.length; j ++) {
+      o += arr[j] ? arr[j][1] : ' '
     }
     lines.push(o)
   }
@@ -38,78 +66,111 @@ ScreenBuffer.prototype.toString = function() {
 }
 
 
-/* ====================================================
- *  Here are the operations that can be performed on a ScreenBuffer.
- */
-
-/** Sets the cursor position to (x, y) */
+// ### setCursor(x, y)
+//
+// Sets the cursor position.
+//
 ScreenBuffer.prototype.setCursor = function(x, y) {
+
+  // ### cursorX
+  //
+  // The X position of the cursor.
+  //
   this.cursorX = x
+
+  // ### cursorY
+  //
+  // The Y position of the cursor.
+  //
   this.cursorY = y
 }
 
-/** Returns the number of rows in this buffer */
+// ### getRows()
+//
+// Returns the number of rows in the buffer.
+//
 ScreenBuffer.prototype.getRows = function() {
   return this.data.length
 }
 
-/** Returns the number of columns in a certain row in this buffer */
+// ### getCols(row)
+//
+// Returns the number of characters in this row.
+//
 ScreenBuffer.prototype.getCols = function(row) {
   return this.data[row] ? this.data[row].length : 0
 }
 
-/** Sets the number of rows in this buffer */
+// ### setRows(rows)
+//
+// Resizes the number of rows.
+//
 ScreenBuffer.prototype.setRows = function(rows) {
   this.data.length = rows
 }
 
-/** Sets the number of columns in a certain row in this buffer */
+// ### setCols(row, cols)
+//
+// Resizes the number of columns in the specified row.
+//
 ScreenBuffer.prototype.setCols = function(row, cols) {
   var arr = this.data[row] || (this.data[row] = [])
   arr.length = cols
 }
 
-/** Gets the cell at row `row`, column `col`.
- * Returns [ attributes, ch ] */
+// ### getCell(row, col)
+//
+// Returns the cell at (row, col).
+// Returned value is in form of [ attributes, ch ].
+//
 ScreenBuffer.prototype.getCell = function(row, col) {
-  return this.data[row] ? (this.data[row][col] || [0, ' ']) : [0, ' ']
+  return (this.data[row] && this.data[row][col]) || ScreenBuffer.EMPTY_CELL
 }
 
-/**
- * Draws some data to this ScreenBuffer on row `row`, starting at column `col`.
- * The patcher will generate a command for this...
- * No need to use this directly.
- */
-ScreenBuffer.prototype.draw = function(row, col, text, attrsCompressed) {
-
-  // unpack the attributes
-  var attrs = []
-  for (var i = 0; i < attrsCompressed.length; i ++) {
-    var c = attrsCompressed[i]
-    for (var j = 0; j < c[1]; j ++) {
-      attrs[attrs.length] = c[0]
-    }
-  }
-
-  // draw...
+// ### setCell(row, col, cell)
+//
+// Sets the cell at (row, col). A cell is in form of [ attributes, ch ].
+//
+ScreenBuffer.prototype.setCell = function(row, col, cell) {
   var arr = this.data[row] || (this.data[row] = [])
-  for (var i = 0; i < attrs.length; i ++) {
-    arr[col + i] = [attrs[i], text.charAt(i)]
-  }
-
+  arr[col] = cell
 }
 
-/**
- * Copy contents of a row.
- */
-ScreenBuffer.prototype.copy = function(row, source) {
+// ### resize(rows, cols)
+// 
+// Resizes the screen buffer.
+//
+ScreenBuffer.prototype.resize = function(rows, cols) {
+  this.setRows(rows)
+  for (var i = 0; i < rows; i ++) this.setCols(i, cols)
+}
 
-  // draw...
-  var arr = this.data[row] || (this.data[row] = [])
-  for (var i = 0; i < arr.length; i ++) {
-    arr[i] = this.getCell(source, i).slice()
+// ### clone()
+//
+// Returns a clone of the screen buffer.
+//
+ScreenBuffer.prototype.clone = function() {
+  var clone = new ScreenBuffer()
+  clone.setRows(this.getRows())
+  clone.setCursor(this.cursorX, this.cursorY)
+  for (var i = 0; i < this.data.length; i ++) {
+    if (this.data[i]) clone.update(i, this.data[i])
   }
+  return clone
+}
 
+// ### getRow(row)
+//
+// Returns a row data array. _Don't modify it!_
+//
+ScreenBuffer.prototype.getRow = function(row) {
+  return this.data[row]
 }
 
 if (typeof module != 'undefined') module.exports = ScreenBuffer
+
+
+
+
+
+
