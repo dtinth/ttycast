@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "PORT=13376 phantomjs harness/smoke-test.js"
   },
   "license": "MIT"
 }
