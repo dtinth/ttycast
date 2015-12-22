@@ -6,7 +6,7 @@ window.onload = function() {
     , buf = new DisplayBuffer(el)
 
   var socket = io.connect()
-  socket.on('data', function(operations) {
+  socket.on('terminal-data', function(operations) {
     ScreenBuffer.patch(buf, operations)
   })
 
