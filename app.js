@@ -40,7 +40,6 @@ var connect = require('connect')
 
 // create socket.io server
 var io = require('socket.io').listen(server)
-io.set('log level', 1)
 
 
 // serve static files
