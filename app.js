@@ -69,7 +69,7 @@ var buffer = new ScreenBuffer()
 // when a client is connected, it is initialized with an empty buffer.
 // we patch its buffer to our current state
 io.sockets.on('connection', function(sock) {
-  io.sockets.emit('data', ScreenBuffer.diff(new ScreenBuffer(), buffer))
+  sock.emit('data', ScreenBuffer.diff(new ScreenBuffer(), buffer))
 })
 
 // when the terminal's screen buffer is changed,
