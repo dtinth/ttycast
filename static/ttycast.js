@@ -10,4 +10,5 @@ window.onload = function() {
     ScreenBuffer.patch(buf, operations)
   })
 
+  return socket
 }
